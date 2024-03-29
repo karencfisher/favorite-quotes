@@ -91,6 +91,7 @@ function pinUnpinQuotation(quote) {
         }
         quote.dataset.pinned = "false";
         displayMessage("Unpinned", "");
+        searchText.focus();
     }
 }
 
@@ -156,7 +157,11 @@ searchText.addEventListener("keydown", (e) => {
         }
         getQuotes(e.target.value);
         e.target.value = "";
+        e.target.focus();
     }
 });
 
-addEventListener("load", getQuotes(""));
+addEventListener("load", () => {
+    getQuotes("");
+    searchText.focus();
+});
