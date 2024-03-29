@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Famous Quotes</title>
+    <link rel="stylesheet" href="quotes.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Neuton:ital@0;1&display=swap" rel="stylesheet">
+    <script src="quotes.js" defer></script>
+</head>
+<body>
+    <header id="header">
+        <h1 id="title-bar">
+            Favorite Quotations
+        </h1>
+    </header>                             
+    <main id="container">
+        <div id="search-bar">
+            <span class="material-icons-outlined" id="search-icon">person_search</span>
+            <input id="search-text" type="text" placeholder="search author" aria-label="search author">
+        </div>
+        <div id="pinned-quotations"></div>
+        <div id="quotations"></div>
+
+        <div id="message" aria-live="assertive"></div>
+    </main>
+</body>
+</html>
