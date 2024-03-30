@@ -1,5 +1,6 @@
 async function getQuotes(query) {
     let url = baseURL;
+    
     if (query === "") {
         url += "random";
     }
@@ -17,17 +18,55 @@ async function getQuotes(query) {
         return;
     }
 
-    if (!contents.count) {
+    if (initialState) {
+        // random quote
         addQuotation(contents.content, contents.author)
     }
     else {
         const quotations = document.getElementById("quotations");
         quotations.innerHTML = "";
+
+        if (searchLevel < 4) {
+            // filter results to full or partial matches
+            contents.results = contents.results.filter((quote) => filterNames(quote, query, searchLevel));
+        }
+
+        // Add quotations to page
         contents.results.forEach((item) => {
             addQuotation(item.content, item.author)
         });
         displayMessage(`${contents.results.length} quotations found for author "${query}"`, "message");
     }
+}
+
+function filterNames(quote, query, level) {
+    // complete match
+    if (quote.author.toLowerCase() === query.toLowerCase()) {
+        return true;
+    }
+
+    const nameParts = quote.author.toLowerCase().split(" ");
+    const queryParts = query.toLowerCase().split(" ");
+
+    if (level === 2 || queryParts.length === 1) {
+        const lastName = nameParts.slice(-1);
+        const lastQueryName = queryParts.slice(-1);
+        if (lastName[0] === lastQueryName[0]) {
+            return true;
+        }
+    }
+
+    if (level === 3) {
+        // Partial match (one or more name components match)
+        const namePartsSet = new Set(nameParts);
+        const queryPartsSet = new Set(queryParts);
+        if (namePartsSet.intersection(queryPartsSet).size > 0) {
+            return true;
+        }
+    }
+
+    // No cigar
+    return false;
 }
 
 function addQuotation(quote, citation) {
@@ -226,7 +265,39 @@ searchText.addEventListener("keydown", (e) => {
     }
 });
 
+/* search settings dialog */
+let settingsDisplayed = false;
+let searchLevel = 1;
+const searchSettings = document.getElementById("search-settings");
+
+function toggleSettingsDialog() {
+    settingsDisplayed = !settingsDisplayed;
+    const settings = document.getElementById("settings");
+    settings.dataset.open = `${settingsDisplayed}`;
+    searchText.disabled = settingsDisplayed;
+}
+
+searchSettings.addEventListener("click", () => {
+    toggleSettingsDialog();
+});
+
+searchSettings.addEventListener("keypress", (e) => {
+    if (e.code === "Enter") {
+        toggleSettingsDialog();
+    }
+});
+
+const okButton = document.getElementById("ok-button");
+okButton.addEventListener("click", toggleSettingsDialog);
+
 addEventListener("load", () => {
     getQuotes("");
     searchText.focus();
+});
+
+const searchOptions = [...document.getElementsByClassName("search-level")];
+searchOptions.forEach((option) => {
+    option.addEventListener("click", (e) => {
+        searchLevel = Number(e.target.value);
+    });
 });
