@@ -16,7 +16,8 @@
         <h1 id="title-bar">
             Favorite Quotations
         </h1>
-    </header>                             
+    </header>
+                                 
     <main id="container">
         <div id="search-bar">
             <span class="material-icons-outlined" id="search-icon">person_search</span>
@@ -26,23 +27,26 @@
         </div>
         <div id="pinned-quotations" aria-label="pinned"></div>
         <div id="quotations" aria-label="unpinned"></div>
-
-        <div id="message" aria-live="assertive"></div>
-        <div id="settings">
-            <h2>Filter author names:</h2>
-            <div id="choices">
-                <input type="radio" id="level-1" class="search-level" name="search-level" value="1" checked>
-                <label for="level-1">Exact Match</label><br>
-                <input type="radio" id="level-2" class="search-level" name="search-level" value="2">
-                <label for="level-2">Match Last Name</label><br>
-                <input type="radio" id="level-3" class="search-level" name="search-level" value="3">
-                <label for="level-3">Partial Matches</label><br>
-                <input type="radio" id="level-4" class="search-level" name="search-level" value="4">
-                <label for="level-4">No Filter</label>
-            </div>
-            <button id="ok-button">OK</button>
-        </div>
     </main>
+
+    <!-- Message display/announce -->
+    <div id="message" aria-live="assertive"></div>
+        
+    <!-- search settings dialog -->
+    <div id="settings">
+        <h2>Filter author names:</h2>
+        <div id="choices">
+            <input type="radio" id="level-1" class="search-level" name="search-level" value="1" checked>
+            <label for="level-1">Exact Match</label><br>
+            <input type="radio" id="level-2" class="search-level" name="search-level" value="2">
+            <label for="level-2">Match Last Name</label><br>
+            <input type="radio" id="level-3" class="search-level" name="search-level" value="3">
+            <label for="level-3">Partial Matches</label><br>
+            <input type="radio" id="level-4" class="search-level" name="search-level" value="4">
+            <label for="level-4">No Filter</label>
+        </div>
+        <button id="ok-button">OK</button>
+    </div>
 </body>
 </html>
 
