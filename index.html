@@ -17,13 +17,15 @@
             Favorite Quotations
         </h1>
     </header>
-                                 
+
     <main id="container">
         <div id="search-bar">
             <span class="material-icons-outlined" id="search-icon">person_search</span>
             <input id="search-text" type="text" placeholder="search author" aria-label="search author">
             <span class="material-icons-outlined" id="search-settings" tabindex="0"
                   aria-label="search settings" role="button">filter_alt</span>
+            <span class="material-icons-outlined" id="search-cancel" tabindex="0"
+                  aria-label="clear search" role="button">cancel</span>
         </div>
         <div id="pinned-quotations" aria-label="pinned"></div>
         <div id="quotations" aria-label="unpinned"></div>
@@ -47,6 +49,9 @@
         </div>
         <button id="ok-button">OK</button>
     </div>
+
+    <!-- App mask -->
+    <div id="mask"></div>
 </body>
 </html>
 

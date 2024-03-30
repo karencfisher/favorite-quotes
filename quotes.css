@@ -75,8 +75,12 @@ body {
     font-size: 1.2rem;
 }
 
-#search-settings {
+#search-settings, #search-cancel {
     cursor: pointer;
+}
+
+#search-settings:hover, #search-cancel:hover {
+    color: red;
 }
 
 #settings {
@@ -90,6 +94,7 @@ body {
     border-radius: 10px;
     padding: 10px;
     width: 75%;
+    z-index: 999;
     box-shadow: 8px 8px 8px rgba(20, 20, 20, .5), 5px 5px 5px rgba(20, 20, 20, .8);
 }
 
@@ -106,6 +111,19 @@ body {
 #settings > button {
     align-self: flex-end;
     cursor: pointer;
+}
+
+#mask {
+    position: fixed;
+    display: none;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(20, 20, 20, .4);
+}
+
+#mask[data-open="true"] {
+    display: block;
 }
 
 #quotations, #pinned-quotations {

@@ -260,7 +260,6 @@ searchText.addEventListener("keydown", (e) => {
             initialState = false;
         }
         getQuotes(e.target.value);
-        e.target.value = "";
         e.target.focus();
     }
 });
@@ -269,12 +268,14 @@ searchText.addEventListener("keydown", (e) => {
 let settingsDisplayed = false;
 let searchLevel = 1;
 const searchSettings = document.getElementById("search-settings");
+const searchCancel = document.getElementById("search-cancel");
 
 function toggleSettingsDialog() {
     settingsDisplayed = !settingsDisplayed;
     const settings = document.getElementById("settings");
     settings.dataset.open = `${settingsDisplayed}`;
-    searchText.disabled = settingsDisplayed;
+    const mask = document.getElementById("mask");
+    mask.dataset.open = `${settingsDisplayed}`;
 }
 
 searchSettings.addEventListener("click", () => {
@@ -284,6 +285,18 @@ searchSettings.addEventListener("click", () => {
 searchSettings.addEventListener("keypress", (e) => {
     if (e.code === "Enter") {
         toggleSettingsDialog();
+    }
+});
+
+searchCancel.addEventListener("click", () => {
+    searchText.value = "";
+    searchText.focus();
+});
+
+searchCancel.addEventListener("keypress", (e) => {
+    if (e.code === "Enter") {
+        searchText.value = "";
+        searchText.focus();
     }
 });
 
