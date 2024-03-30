@@ -102,6 +102,18 @@ body {
     color: var(--pinned-text-color);
 }
 
+.icons {
+    display: flex;
+    justify-content: flex-start;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.icons > span {
+    font-size: .9rem;
+    padding: 3px;       
+}
+
 .quotation > p {
     margin: 0;
 }

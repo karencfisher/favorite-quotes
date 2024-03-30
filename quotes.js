@@ -36,15 +36,35 @@ function addQuotation(quote, citation) {
     blockquote.classList.add("quotation");
     blockquote.tabIndex = "0";
 
+    const icons = document.createElement("div");
+    icons.classList.add("icons");
+    let html = `<span class="material-icons-outlined copy" aria-label="copy" 
+    tabindex="0" role="button">content_copy</span>`
+    if (navigator.canShare) {
+        html += `<span class="material-icons-outlined share" aria-label="share" tabindex="0" 
+    role="button">share</span>`
+    }
+    icons.innerHTML = html;
+    blockquote.appendChild(icons);
+
     const text = document.createElement("p");
     text.innerText = quote;
     blockquote.appendChild(text);
+
     const cite = document.createElement("footer");
     cite.innerText = `\u2014 ${citation}`;
     blockquote.appendChild(cite);
 
     blockquote.addEventListener("click", (e) => {
-        pinUnpinQuotation(e.currentTarget);
+        if (e.target.classList.contains("copy")) {
+            copyQuote(e.currentTarget);
+        }
+        else if (e.target.classList.contains("share")) {
+            shareQuote(e.currentTarget);
+        }
+        else {
+            pinUnpinQuotation(e.currentTarget);
+        }
     });
 
     blockquote.addEventListener("keypress", (e) => {
@@ -66,11 +86,11 @@ function pinUnpinQuotation(quote) {
     if (quotations.contains(quote)) {
         quotations.removeChild(quote);
 
-        const p = quote.querySelector("p");
+        const icons = quote.querySelector("div");
         const span = document.createElement("span");
         span.classList.add("material-icons-outlined");
         span.innerText = "push_pin";
-        p.insertBefore(span,p.firstChild);
+        icons.insertBefore(span, icons.firstChild);
 
         pinned.appendChild(quote);
         quote.dataset.pinned = "true";
@@ -78,10 +98,10 @@ function pinUnpinQuotation(quote) {
     }
     else {
         pinned.removeChild(quote);
-        const p = quote.querySelector("p");
-        const span = p.querySelector("span");
+        const icons = quote.querySelector("div");
+        const span = icons.querySelector("span");
         if (span) {
-            p.removeChild(span);
+            icons.removeChild(span);
         }
         if (quotations.firstChild) {
             quotations.insertBefore(quote, quotations.firstChild);
@@ -97,7 +117,6 @@ function pinUnpinQuotation(quote) {
 
 function readQuote(quote) {
     const quotations = document.getElementById("quotations");
-    const pinned = document.getElementById("pinned-quotations");
     message = quote.innerText;
     if (quotations.contains(quote)) {
         message += ". Enter to pin"
@@ -106,6 +125,52 @@ function readQuote(quote) {
         message += ". Pinned, Enter to unpin";
     }
     displayMessage(message, "");
+}
+
+async function copyQuote(quote) {
+    const text = quote.querySelector("p").innerText;
+    const cite = quote.querySelector("footer").innerText;
+    const quotation =  `${text}\n\n${cite}`
+    
+    if (navigator.clipboard) {
+        try {
+            await navigator.clipboard.writeText(quotation);
+        } catch(error) {
+            displayMessage(`An error occured copying ${error}`, "error");
+            return;
+        }
+    }
+    else {
+        try {
+            const textArea = document.createElement("textarea");
+            textArea.textContent = quotation;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            document.body.removeChild(textArea);
+        } catch(error) {
+            displayMessage(`An error occured copying ${error}`, "error");
+            return;
+        }
+    }
+    displayMessage("Copied quotation to clipboard", "message");
+}
+
+async function shareQuote(quote) {
+    const text = quote.querySelector("p").innerText;
+    const cite = quote.querySelector("footer").innerText;
+    const quotation = `${text}\n\n\t${cite}`;
+    const title = `Quotation from ${cite.replace("\u2014", "")}`;
+    try {
+        await navigator.share(
+            {   
+                title: title,
+                text: quotation
+            }
+        );
+    } catch(error) {
+        displayMessage(`An error occured sharing ${error}`, "error");
+    }
 }
 
 function displayMessage(message, show) {
