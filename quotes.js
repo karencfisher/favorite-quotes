@@ -159,7 +159,7 @@ async function copyQuote(quote) {
 async function shareQuote(quote) {
     const text = quote.querySelector("p").innerText;
     const cite = quote.querySelector("footer").innerText;
-    const quotation = `${text}\n\n\t${cite}`;
+    const quotation = `${text}\n\n${cite}`;
     const title = `Quotation from ${cite.replace("\u2014", "")}`;
     try {
         await navigator.share(
