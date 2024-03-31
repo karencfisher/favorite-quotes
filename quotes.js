@@ -40,7 +40,7 @@ async function getQuotes(query) {
 }
 
 function filterNames(quote, query, level) {
-    // complete match
+    // Complete match
     if (quote.author.toLowerCase() === query.toLowerCase()) {
         return true;
     }
@@ -49,6 +49,7 @@ function filterNames(quote, query, level) {
     const queryParts = query.toLowerCase().split(" ");
 
     if (level === 2 || queryParts.length === 1) {
+        // Match last name
         const lastName = nameParts.slice(-1);
         const lastQueryName = queryParts.slice(-1);
         if (lastName[0] === lastQueryName[0]) {
@@ -57,7 +58,7 @@ function filterNames(quote, query, level) {
     }
 
     if (level === 3) {
-        // Partial match (one or more name components match)
+        // Match any name
         const namePartsSet = new Set(nameParts);
         const queryPartsSet = new Set(queryParts);
         if (namePartsSet.intersection(queryPartsSet).size > 0) {
