@@ -91,6 +91,9 @@ function addQuotation(quote, citation) {
     blockquote.appendChild(text);
 
     const cite = document.createElement("footer");
+    if (citation.length === 0) {
+        citation = "Anonymous";
+    }
     cite.innerText = `\u2014 ${citation}`;
     blockquote.appendChild(cite);
 
