@@ -48,7 +48,7 @@ function filterNames(quote, query, level) {
     const nameParts = quote.author.toLowerCase().split(" ");
     const queryParts = query.toLowerCase().split(" ");
 
-    if (level === 2 || queryParts.length === 1) {
+    if (level === 2) {
         // Match last name
         const lastName = nameParts.slice(-1);
         const lastQueryName = queryParts.slice(-1);
