@@ -41,8 +41,10 @@ async function getQuotes(query) {
 
 function filterNames(quote, query, level) {
     // Complete match
-    if (quote.author.toLowerCase() === query.toLowerCase()) {
-        return true;
+    if (level === 1) {
+        if (quote.author.toLowerCase() === query.toLowerCase()) {
+            return true;
+        }
     }
 
     const nameParts = quote.author.toLowerCase().split(" ");
