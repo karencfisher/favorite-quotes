@@ -195,13 +195,12 @@ function pinUnpinQuotation(quote) {
 *   functionality to read quote aloud
 */
 function readQuote(quote) {
-    const quotations = document.getElementById("quotations");
-    message = quote.innerText;
-    if (quotations.contains(quote)) {
-        message += ". Enter to pin"
-    }
-    else {
-        message += ". Pinned, Enter to unpin";
+    const pinnedQuotes = document.getElementById("pinned-quotations");
+    const quotation = quote.querySelector("p").innerText;
+    const citation = quote.querySelector("footer").innerText.replace("\u2014", "").trim();
+    message = `${quotation}. ${citation}`;
+    if (pinnedQuotes.contains(quote)) {
+        message += ". Pinned";
     }
     displayMessage(message, "");
 }
@@ -371,6 +370,14 @@ function toggleSettingsDialog() {
     const settings = document.getElementById("settings");
     settings.dataset.open = `${settingsDisplayed}`;
 
+    if (settingsDisplayed) {
+        levelButton = document.getElementById(`level-${searchLevel}`);
+        levelButton.focus();
+    }
+    else {
+        searchText.focus();
+    }
+
     // app mask to make dialog modal
     const mask = document.getElementById("mask");
     mask.dataset.open = `${settingsDisplayed}`;
@@ -383,5 +390,6 @@ const searchOptions = [...document.getElementsByClassName("search-level")];
 searchOptions.forEach((option) => {
     option.addEventListener("click", (e) => {
         searchLevel = Number(e.target.value);
+        displayMessage("Selected", "");
     });
 });
