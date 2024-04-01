@@ -379,12 +379,14 @@ function toggleSettingsDialog() {
     }
 
     // app mask to make dialog modal
-    const mask = document.getElementById("mask");
     mask.dataset.open = `${settingsDisplayed}`;
 }
 
+const mask = document.getElementById("mask");
 const okButton = document.getElementById("ok-button");
 okButton.addEventListener("click", toggleSettingsDialog);
+
+mask.addEventListener("click", toggleSettingsDialog);
 
 const searchOptions = [...document.getElementsByClassName("search-level")];
 searchOptions.forEach((option) => {
