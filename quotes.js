@@ -321,7 +321,7 @@ searchText.addEventListener("keydown", (e) => {
         }
 
         // service query
-        getQuotes(e.target.value);
+        getQuotes(e.target.value.trim());
         e.target.focus();
     }
 });
