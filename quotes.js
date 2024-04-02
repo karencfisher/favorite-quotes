@@ -370,11 +370,18 @@ function toggleSettingsDialog() {
     const settings = document.getElementById("settings");
     settings.dataset.open = `${settingsDisplayed}`;
 
+    // set tabindexes and focus
+    const choices = [...document.getElementsByClassName("search-level")];
+    const okButton = document.getElementById("ok-button");
     if (settingsDisplayed) {
         levelButton = document.getElementById(`level-${searchLevel}`);
         levelButton.focus();
+        choices.forEach((choice) => choice.setAttribute("tabindex", "0"));
+        okButton.setAttribute("tabindex", "0");
     }
     else {
+        choices.forEach((choice) => choice.setAttribute("tabindex", "-1"));
+        okButton.setAttribute("tabindex", "-1");
         searchText.focus();
     }
 
