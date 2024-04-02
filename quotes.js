@@ -154,8 +154,11 @@ function handleQuoteClick(e) {
         shareQuote(e.currentTarget);
     }
     // otherwise pin/unpin quote
-    else {
+    else if (e.target.classList.contains("pin")) {
         pinUnpinQuotation(e.currentTarget);
+    }
+    else {
+        e.currentTarget.focus();
     }
 }
 

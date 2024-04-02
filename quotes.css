@@ -148,12 +148,17 @@ body {
     color: var(--text-color);
     border-radius: 5px;
     min-width: 100%;
-    cursor: pointer;
 }
 
 .quotation[data-pinned="true"] {
     background-color: var(--pinned-background-color);
     color: var(--pinned-text-color);
+}
+
+.quotation:focus {
+    border-style: solid;
+    border-width: 1px;
+    border-color: var(--text-color);
 }
 
 .icons {
@@ -165,7 +170,8 @@ body {
 
 .icons > span {
     font-size: .9rem;
-    padding: 3px;       
+    padding: 3px;
+    cursor: pointer;       
 }
 
 .quotation > p {
